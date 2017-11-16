@@ -63,3 +63,197 @@
     "typescript": "~2.3.3"
   }
 }
+
+
+// import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
+// import { FormControl } from '@angular/forms';
+// import { ControlValueAccessor, Validator, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
+
+
+// @Component({
+//   selector: 'ngx-number-picker',
+//   template: `
+//   <div class="ngxNumberPicker-container input-group">  
+//     <div class="input-group-btn">
+//       <button type="button" class="btn btn-default" (click)="decreaseValue()" [disabled]="isControlDisabled">
+//         <span class="fa fa-minus"></span>
+//       </button>
+//     </div>
+//   <input [value]="innerValue" class="form-control text-center" [disabled]="isControlDisabled || inputDisabled" 
+//      (change)="onInputChange($event)" 
+//     type="number" 
+//     min="{{min}}" 
+//     max="{{max}}" 
+//     pattern="{{pattern}}"/>
+//     <span *ngIf="addon" class="input-group-addon">{{ addon }}</span>
+//     <div class="input-group-btn">
+//       <button type="button" class="btn btn-default" (click)="increaseValue()" [disabled]="isControlDisabled">
+//         <span class="fa fa-plus"></span>
+//       </button>
+//     </div>
+//   </div>
+//   `,
+//   styles: [`
+//     /* Remove spinner for chrome */
+//     input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+//       -webkit-appearance: none;
+//       margin: 0;
+//     }
+    
+//     /* Remove spinner mozilla */  
+//     input[type=number] {
+//       -moz-appearance: textfield;
+//     }
+    
+//     span.input-group-addon {
+//         padding: 6px 12px;
+//         border-left-width: 0px;
+//     }
+//   `],
+//   providers: [{
+//     provide: NG_VALUE_ACCESSOR,
+//     // tslint:disable-next-line
+//     useExisting: forwardRef(() => NumberPickerComponent),
+//     multi: true
+//    },
+//    {
+//     provide: NG_VALIDATORS,
+//     useExisting: forwardRef(() => NumberPickerComponent),
+//     multi: true,
+//   }]
+// })
+
+// export class NumberPickerComponent implements OnInit, ControlValueAccessor, Validator {
+  
+//   @Input() min: number;
+//   @Input() max: number;
+//   @Input() step: number;
+//   @Input() precision: number;
+//   @Input() inputDisabled: boolean;
+//   @Input() addon: string;
+//   @Input() pattern: string;
+
+//   //The internal data model
+//   public innerValue: number;
+//   public isControlDisabled: boolean;
+//   public isError: boolean;
+
+//   public _onTouched = () => {}
+//   public _onPropagateChange = (_: any) => {}
+
+//   constructor() {}
+
+//   ngOnInit() {
+//     if(this.inputDisabled == null) {
+//       this.inputDisabled = false;
+//     }
+
+//     if(this.min == null) {
+//       this.min = 0;
+//     }
+//     if(this.max == null) {
+//       this.max = Number.MAX_VALUE;
+//     }
+//     if(this.precision == null) {
+//       this.precision = 1;
+//     }
+//     if(this.step == null) {
+//       this.step = 1;
+//     }
+
+//     if(this.pattern == null) {
+//       this.pattern = '';
+//     }
+
+//     this.innerValue = 0;
+//     this.isControlDisabled = false;
+//     this.isError = false;
+//   }
+
+//   /* ControlValue Interface Fn */
+//   public writeValue( value : any ) : void {
+//     if(this.innerValue !== value && parseFloat(value) !== NaN ){
+//       this.innerValue = value;
+//     }
+//   }
+
+//   public registerOnChange(fn: (_: any) => {}): void {
+//     this._onPropagateChange = fn;
+//   }
+
+//   public registerOnTouched(fn: () => {}): void {
+//     this._onTouched = fn;
+//   }
+
+//   public setDisabledState(isDisabled: boolean): void {
+//     this.isControlDisabled = isDisabled;
+//   }
+
+//   public validate(c: FormControl) {
+//     return (!this.isError) ? null : {
+//       jsonParseError: {
+//         valid: false,
+//       }
+//     };
+//   }
+  
+
+//   public round(value:number, precision:number): number {
+//     let multiplier : number = Math.pow(10, precision || 0);
+//     return Math.round(value * multiplier) / multiplier;
+//   }
+
+//   public increaseValue(): void {
+//     let currentValue = this.innerValue;
+//     if(currentValue < this.max) {
+//       currentValue = currentValue + this.step;
+//       if(this.precision != null) {
+//         currentValue = this.round(currentValue, this.precision);
+//       }
+//       this.innerValue = currentValue;
+//       this.isError = false;
+//       this._onPropagateChange(currentValue);
+//     }
+//   }
+
+//   public decreaseValue(): void {
+//     let currentValue = this.innerValue;
+//     if(currentValue > this.min) {
+//       currentValue = currentValue-this.step;
+//       if(this.precision != null) {
+//         currentValue = this.round(currentValue, this.precision);
+//       }
+//       this.innerValue = currentValue;
+//       this.isError = false;
+//       this._onPropagateChange(currentValue);
+//     }
+//   }
+
+//   public onInputChange(e): void {
+//     let newValue = e.target.value;
+//     if( isNaN(newValue)){
+//        this.isError = true;
+//     }
+//     else {
+//       newValue = parseFloat(newValue);
+//       if(this.max != null) {
+//         if(newValue > this.max) {
+//           this.isError = true;
+//         }
+//       }
+
+//       if(this.min != null) {
+//         if(newValue < this.min) {
+//           this.isError = true;
+//         }
+//       }
+//     }
+
+//     if(!this.isError) {
+//       this.innerValue = newValue;
+//     }
+
+//     this._onPropagateChange(newValue);
+
+//   };
+// }
